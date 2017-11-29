@@ -116,7 +116,7 @@ class SpotifyDataController: NSObject {
     // ----- PERSONALIZATION ----- //
 
     func getMyTop(type: String, completionHandler: @escaping ([String : AnyObject]?) -> Void ) {
-        let request = spotifyAPIRequest(method: "GET", urlPath: "/me/top/\(type)", queryParams: nil)
+        let request = spotifyAPIRequest(method: "GET", urlPath: "/me/top/\(type)", queryParams: "limit=10")
         sendRequest(request: request, completionHandler: completionHandler)
     }
 

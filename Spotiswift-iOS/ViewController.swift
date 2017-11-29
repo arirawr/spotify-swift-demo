@@ -14,7 +14,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var previousButton: UIButton!
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var albumArtImage: UIImageView!
-
+    @IBOutlet weak var topList: UILabel!
+    
     var loginButton: UIButton?
 
     override func viewDidLoad() {
@@ -22,6 +23,7 @@ class ViewController: UIViewController {
 
         self.previousButton.isHidden = true
         self.nextButton.isHidden = true
+        self.topList.isHidden = true
 
         // Create a Spotify login button
         let button = SpotifyLoginButton(viewController: self, scopes: [.userReadTop, .userReadPlaybackState, .userModifyPlaybackState, .userReadCurrentlyPlaying])
@@ -84,6 +86,29 @@ class ViewController: UIViewController {
         }
     }
 
+    @objc func showTop() {
+        SpotifyDataController.shared.getMyTop(type: "tracks") { data in
+            guard let itemsArray = data!["items"] as? [[String : AnyObject]] else { return }
+
+            var fullString = ""
+
+            for track in itemsArray {
+                guard let trackName = track["name"] as? String else { return }
+                let formattedString: String = "\u{2022}\(trackName)\n"
+                fullString = fullString + formattedString
+            }
+
+            print(fullString)
+
+            DispatchQueue.global().async {
+                DispatchQueue.main.async {
+                    self.topList.text = fullString
+                    print(self.topList.text)
+                }
+            }
+        }
+    }
+
     @objc func loginSuccessful() {
         print("LOGIN COMPLETED")
         SpotifyLogin.shared.getAccessToken { (accessToken, error) in
@@ -94,17 +119,9 @@ class ViewController: UIViewController {
         self.loginButton?.isHidden = true
         self.previousButton?.isHidden = false
         self.nextButton?.isHidden = false
+        self.topList?.isHidden = false
 
-        SpotifyDataController.shared.getMyTop(type: "tracks") { data in
-            guard let itemsArray = data!["items"] as? [[String : AnyObject]] else { return }
-            print("Top Tracks:")
-            for track in itemsArray {
-                guard let trackName = track["name"] as? String else { return }
-                print(trackName)
-            }
-            print("")
-        }
-
+        self.showTop()
         self.updateCurrentlyPlaying()
     }
 

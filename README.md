@@ -31,6 +31,6 @@ First, fork and clone this project to your machine.
 1. Your top tracks are shown on the page. Show your **top artists** instead. (See `showTop()`)
 2. Add a **pause** button and a **play** button. The functions are already implemented in the `SpotifyDataController`. (See `previous()` and `next()`) 
 3. Show the title and artist of the **current track**. (See `updateCurrentlyPlaying()`)
-4. The top tracks endpoint allows you to choose out of 3 different time ranges, `short_term`, `medium_term` (default), and `long_term`. Show your long term top tracks. (See `getMyTop()` in `SpotifyDataController`)
+4. The top tracks endpoint allows you to choose out of 3 different time ranges, `short_term`, `medium_term` (default), and `long_term`. Show your **long term top tracks**. (See `getMyTop()` in `SpotifyDataController`)
 5. Use one of the other functions from `SpotifyDataController` to show data in your app.
 6. Implement another endpoint from the Spotify API.

@@ -1,0 +1,6 @@
+framework module Pods_Spotiswift_iOS {
+  umbrella header "Pods-Spotiswift-iOS-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -66,13 +66,16 @@ class ViewController: UIViewController {
 
             // Parse JSON to get the image URL
             guard let trackItem = data["item"] as? [String: Any] else { return }
-            guard let trackName = trackItem["name"] as? String else { return }
             guard let album = trackItem["album"] as? [String: Any] else { return }
             guard let images = album["images"] as? [AnyObject] else { return }
             guard let imageURLString = images[0]["url"] as? String else { return }
 
+            guard let trackName = trackItem["name"] as? String else { return }
+
+            guard let artistsList = trackItem["artists"] as? [AnyObject] else { return }
+            guard let artistName = artistsList[0]["name"] as? String else { return }
+
             print("Currently Playing:")
-            print(trackName)
             print(imageURLString)
             print("")
 

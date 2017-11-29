@@ -88,33 +88,27 @@ class ViewController: UIViewController {
 
     @objc func showTop() {
         SpotifyDataController.shared.getMyTop(type: "tracks") { data in
-            guard let itemsArray = data!["items"] as? [[String : AnyObject]] else { return }
+            guard let data = data else { return }
+            guard let itemsArray = data["items"] as? [[String : AnyObject]] else { return }
 
             var fullString = ""
 
             for track in itemsArray {
                 guard let trackName = track["name"] as? String else { return }
-                let formattedString: String = "\u{2022}\(trackName)\n"
+                let formattedString: String = "\u{2022} \(trackName)\n"
                 fullString = fullString + formattedString
             }
 
             print(fullString)
 
-            DispatchQueue.global().async {
-                DispatchQueue.main.async {
-                    self.topList.text = fullString
-                    print(self.topList.text)
-                }
+            DispatchQueue.main.async {
+                self.topList.text = fullString
             }
         }
     }
 
     @objc func loginSuccessful() {
         print("LOGIN COMPLETED")
-        SpotifyLogin.shared.getAccessToken { (accessToken, error) in
-            print(accessToken ?? "No Access Token")
-        }
-        print("")
 
         self.loginButton?.isHidden = true
         self.previousButton?.isHidden = false

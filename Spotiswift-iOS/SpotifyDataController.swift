@@ -115,12 +115,23 @@ class SpotifyDataController: NSObject {
 
     // ----- PERSONALIZATION ----- //
 
+    // Valid types are 'tracks' or 'artists'
     func getMyTop(type: String, completionHandler: @escaping ([String : AnyObject]?) -> Void ) {
         let request = spotifyAPIRequest(method: "GET", urlPath: "/me/top/\(type)", queryParams: "limit=10")
         sendRequest(request: request, completionHandler: completionHandler)
     }
 
     // --------- PLAYER --------- //
+
+    func pause(completionHandler: @escaping ([String : AnyObject]?) -> Void ) {
+        let request = spotifyAPIRequest(method: "PUT", urlPath: "/me/player/pause/", queryParams: nil)
+        sendRequest(request: request, completionHandler: completionHandler)
+    }
+
+    func play(completionHandler: @escaping ([String : AnyObject]?) -> Void ) {
+        let request = spotifyAPIRequest(method: "PUT", urlPath: "/me/player/play/", queryParams: nil)
+        sendRequest(request: request, completionHandler: completionHandler)
+    }
 
     func skipToPreviousTrack(completionHandler: @escaping ([String : AnyObject]?) -> Void ) {
         let request = spotifyAPIRequest(method: "POST", urlPath: "/me/player/previous/", queryParams: nil)

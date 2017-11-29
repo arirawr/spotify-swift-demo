@@ -25,3 +25,12 @@ First, fork and clone this project to your machine.
 #### In the iOS App:
 1. Run `pod repo update` and `pod install` in the Terminal.
 2. In the `AppDelegate`, look for the call to `SpotifyLogin.shared.configure()`. Replace the placeholders with your client ID, secret, and redirect URI.
+
+## Challenges
+
+1. Your top tracks are shown on the page. Show your **top artists** instead. (See `showTop()`)
+2. Add a **pause** button and a **play** button. The functions are already implemented in the `SpotifyDataController`. (See `previous()` and `next()`) 
+3. Show the title and artist of the **current track**. (See `updateCurrentlyPlaying()`)
+4. The top tracks endpoint allows you to choose out of 3 different time ranges, `short_term`, `medium_term` (default), and `long_term`. Show your long term top tracks. (See `getMyTop()` in `SpotifyDataController`)
+5. Use one of the other functions from `SpotifyDataController` to show data in your app.
+6. Implement another endpoint from the Spotify API.

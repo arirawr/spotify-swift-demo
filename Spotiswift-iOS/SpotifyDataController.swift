@@ -23,7 +23,7 @@ class SpotifyDataController: NSObject {
 
     // --------- Utility Functions --------- //
 
-    func getToken() -> String {
+    var accessToken: String {
         var accessToken: String = ""
         SpotifyLogin.shared.getAccessToken { (token, error) in
             accessToken = token!
@@ -39,7 +39,7 @@ class SpotifyDataController: NSObject {
         
         var request = URLRequest(url: URL(string: urlString)!)
         request.httpMethod = method
-        request.setValue("Bearer \(getToken())", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
 
         print(request)
         print("")
@@ -50,14 +50,13 @@ class SpotifyDataController: NSObject {
     func sendRequest(request: URLRequest, completionHandler: @escaping ([String : AnyObject]?) -> Void ) {
         var json = [String : AnyObject]()
 
-        let task = URLSession.shared.dataTask(with: request, completionHandler: {
-            (data, response, error) in
+        let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
             if let error = error {
                 print(error)
                 return
             }
             do {
-                // Get JSON Response
+                // Parse and return JSON Response
                 json = try JSONSerialization.jsonObject(with: data!, options:.allowFragments) as! [String : AnyObject]
                 completionHandler(json)
             }

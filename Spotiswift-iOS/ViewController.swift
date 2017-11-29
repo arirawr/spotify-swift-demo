@@ -38,11 +38,6 @@ class ViewController: UIViewController {
         self.nextButton.addTarget(self, action: #selector(ViewController.nextTrack), for: .touchUpInside)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         loginButton?.center = self.view.center
@@ -65,7 +60,10 @@ class ViewController: UIViewController {
     @objc func updateCurrentlyPlaying() {
         SpotifyDataController.shared.getCurrentlyPlayingTrack() { data in
 
-            guard let trackItem = data!["item"] as? [String: Any] else { return }
+            guard let data = data else { return }
+
+            // Parse JSON to get the image URL
+            guard let trackItem = data["item"] as? [String: Any] else { return }
             guard let trackName = trackItem["name"] as? String else { return }
             guard let album = trackItem["album"] as? [String: Any] else { return }
             guard let images = album["images"] as? [AnyObject] else { return }
